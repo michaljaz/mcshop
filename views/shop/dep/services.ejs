@@ -1,0 +1,66 @@
+<%
+server=database.servers[query.server];
+if(server!=undefined){%>
+<div class="card-header">
+	<span onclick="document.location='?temp=main'">Sklep</span> <span>/ <%=server.name%></span><span class="text-muted"> / Usługi</span>
+</div>
+<div class="card-body" style="background:#2d2d2d;">
+	<div class="row">
+		<% 
+		Object.keys(database.services).forEach(function (service){ 
+			if(database.services[service].server==query.server){
+			%>
+				<div class="col-xl-4 col-md-6 col-lg-6 col-sm-6 col-12 col-6 mb-3 " onclick="document.location='?temp=service&service=<%=service%>'">
+	      			<div class="card text-light cardx waves-effect waves-light" style="background:#292929">
+	      				<center>
+				  			<img src="<%=database.services[service].icon%>" class="card-img-top" alt="Nie można załadować zdjęcia" style="width:100px;height:100px;">
+			  				<div class="card-body">
+			    	
+		    					<table style="width:100%;">
+		    						<tr>
+		    							<td><b>Przelew</b></td>
+		    							<td class="float-right">
+		    								<%if(database.services[service].payments.przelew.active){%>
+		    									<%=database.services[service].payments.przelew.cost%> zł
+		    								<%}else{%>
+		    									<b>x</b>
+		    								<%}%>
+		    							</td>
+		    						</tr>
+		    						<tr>
+		    							<td><b>PSC</b></td>
+		    							<td class="float-right">
+		    								<%if(database.services[service].payments.PSC.active){%>
+		    									<%=database.services[service].payments.PSC.cost%> zł
+		    								<%}else{%>
+		    									<b>x</b>
+		    								<%}%>
+		    							</td>
+		    						</tr> 
+		    						<tr>
+		    							<td><b>SMS</b></td>
+		    							<td class="float-right">
+		    								<%if(database.services[service].payments.SMS.active){%>
+		    									<%=database.services[service].payments.SMS.cost%> zł
+		    								<%}else{%>
+		    									<b>x</b>
+		    								<%}%>
+		    							</td>
+		    						</tr>
+		    					</table>
+			  				</div>
+			  				<div class="card-footer">
+			  					<h5 class="card-title"><%=database.services[service].title%></h5>
+			  				</div>
+		  				</center>
+					</div>
+				</div>
+			<%
+			}
+		}) 
+		%>
+    </div>
+</div>
+<%}else{%>
+<script>document.location.href="?temp=404"</script>
+<%}%>

@@ -1,0 +1,14 @@
+<h1>
+Przekierowywanie
+</h1>
+Poczekaj chwilkę ;)
+<%
+service=database.services[query.service]
+
+if(service!=undefined){
+	przelew=service.payments.przelew
+%>
+	<script>document.location.href="https://microsms.pl/api/bankTransfer/?shopid=<%=przelew.shopid%>&amount=<%=przelew.cost%>&signature=<%=przelew.signature%>&description=<%=service.title%> dla <%=query.nick%>&control=<%=query.service%>&return_urlc=<%=config.return_urlc%>"</script>
+<%}else{%>
+	<script>document.location.href="?temp=404"</script>
+<%}%>

@@ -1,0 +1,70 @@
+
+    <button class="btn btn-outline-success" onclick="save()">
+    Zapisz
+    </button>
+    <input class="btn btn-outline-warning" type="button" onclick="document.location='?temp=servers'" value="Anuluj">
+    <input class="btn btn-outline-danger" type="button" onclick="del()" value="Usuń">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-light mt-3" style="background:#292929">
+                <div class="card-header">
+                    Ogólne ustawienia
+                </div>
+                <div class="card-body pb-4">
+                    <div class="md-form">
+                        <input name="f_name"type="text" id="f_name" class="form-control text-light" value="<%=database.servers[query.server].name%>">
+                        <label for="f_name">Nazwa serwera</label>
+                    </div>
+                    <div class="md-form">
+                        <input name="f_uuid" type="text" id="f_uuid" class="form-control text-light" value="<%=query.server%>">
+                        <label for="f_uuid">UUID</label>
+                    </div>
+                    <div class="md-form">
+                        <input name="f_ip" type="text" id="f_ip" class="form-control text-light" value="<%=database.servers[query.server].ip%>">
+                        <label for="f_ip">Ip serwera</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-light mt-3" style="background:#292929">
+                <div class="card-header">
+                    RCON
+                </div>
+                <div class="card-body pb-4">
+                    <div class="md-form">
+                        <input name="f_rcon" type="text" id="f_rcon" class="form-control text-light" value="<%=database.servers[query.server].rcon.port%>">
+                        <label for="f_rcon">Port RCON</label>
+                    </div>
+                    <div class="md-form">
+                        <input name="f_rcon_pwd" type="password" id="f_rcon_pwd" class="form-control text-light" value="<%=database.servers[query.server].rcon.password%>">
+                        <label for="f_rcon_pwd">Hasło RCON</label>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <input type="hidden" name="remove" value="false" id="remx">  
+<br><br><br><br><br><br>
+<script>
+function save(){
+    $.get("/panel/api/set_server",{
+        name:f_name.value,
+        uuid:f_uuid.value,
+        ip:f_ip.value,
+        rcon_port:f_rcon.value,
+        rcon_pwd:f_rcon_pwd.value
+    },function (r){
+        document.location.reload()
+    })
+}
+function del(){
+    $.get("/panel/api/set_server",{
+        del:true,
+        uuid:f_uuid.value
+    },function (r){
+        document.location.href="?temp=servers"
+    })
+}
+</script>

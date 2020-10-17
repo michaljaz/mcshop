@@ -1,0 +1,13 @@
+<div class="card text-light" style="background:#292929">
+	<div class="card-header">
+	    Serwery
+	</div>
+	<div class="card-body">
+		<% Object.keys(database.servers).forEach(function (server){%>
+			<div class='btn btn-dark p-5' onclick="document.location='?temp=server&server=<%=server%>'"><%=database.servers[server].name%></div>
+		<%})%>
+	    <button class="btn btn-outline-success p-5" onclick="document.location='/panel/api/new_server'">
+	    	Dodaj nowy serwer
+	    </button>
+	</div>
+</div>

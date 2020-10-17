@@ -1,0 +1,17 @@
+1. Zakaz reklamowania konkurencyjnych serwerów gier.
+2. Zakaz podszywania się pod administrację lub innych graczy.
+3. Zakaz obrażania, prowokowania innych graczy, na serwerze obowiązuje netykieta oraz polskie prawo. (Mniejszą uwagę zwracamy na obrażanie/prowokacje od 22-8)
+4. Zakaz używania wszelkiego rodzaju wspomagaczy, texture packów etc., które dają przewagę nad innymi graczami.
+5. Zakaz spamowania, floodowania na chacie.
+6. Zakaz używania wulgaryzmów. Słowo, które jest uznawane za wulgaryzm powinno być "zakryte" przynajmniej w 30%. Punkt nie obowiązuje od 22 do 8 rano.
+7. Zakaz proszenia administracji o przedmioty, teleportację, rangi etc.
+8. Administracja ma prawo dać Ci kick/mute do 30 min za przeszkadzanie, irytację, spamowanie im na PW etc.
+9. Administracja nie odpowiada za stracone przedmioty, śmierci czy oszustwa innych graczy podczas wymian.
+10. Nie zakazujemy tworzenia MultiKont, zostawiamy furtkę 5 kont na adres IP, dla osób dzielących łącze internetowe, jednak wszelkie objawy wykorzystywania MultiKont dla korzyści własnych bądź gildii będą karane.
+11. Na serwerze mogą odbyć się restarty, w takim przypadku gracze nie otrzymują żadnych rekompensat. Chyba, że inaczej postanowi administracja.
+12. Zezwalamy na oszukiwanie podczas handlu, zabijaniu pod pretekstem dania eq czy robienie tzw. "nóżek". To jest survival.
+13. Gracz świadomie wykorzystujący błąd serwera lub gry, może zostać ukarany. Za zgłoszenie błędu może zostać przyznana nagroda w zależności od stopnia zagrożenia owego błędu.
+14. Zakaz zostawiania postaci przy spawnerach/farmach(Dotyczy również automatycznego łowienia etc.).
+15. Nieznajomość regulaminu nie zwalnia z jego przestrzegania.
+16. Jeżeli zaistniała sytuacja, która nie jest uwzględniona w regulaminie jest ona rozpatrywana indywidualnie przez administrację serwera mc.grok.eu
+17. Administracja ma prawo do zmiany regulaminu w każdej chwili.

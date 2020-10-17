@@ -1,0 +1,166 @@
+<%
+service=database.services[query.service]
+if(service!=undefined){
+%>
+	<div class="card-header">
+		<span onclick="document.location='?temp=main'">Sklep</span>
+		<span onclick="document.location='?temp=services&server=<%=service.server%>'">/ <%=database.servers[service.server].name%></span>
+		<span class="text-muted"> / <%=service["title"]%></span>
+	</div>
+	<div class="card-body" style="background:#2d2d2d;">
+		<div class="row">
+			<div class="col-lg-5 col-md-6">
+	  			<div class="card text-light waves-effect waves-light" style="background:#292929">
+	  				<center>
+						<img src="<%=service.icon%>" class="card-img-top" alt="Nie można załadować zdjęcia" style="width:100px;height:100px;">
+					  	<div class="card-body">
+						    <h5 class="card-title"><%=service.title%></h5>
+					    	<p class="card-text">
+					    		<table style="width:100%;">
+					    			<tr>
+					    				<td><b>Przelew</b></td>
+					    				<td class="float-right">
+					    					<%if(service.payments.przelew.active){%>
+		    									<%=service.payments.przelew.cost%> zł
+		    								<%}else{%>
+		    									<b>x</b>
+		    								<%}%>
+					    				</td>
+					    			</tr>
+					    			<tr>
+					    				<td><b>PSC</b></td>
+					    				<td class="float-right">
+					    					<%if(service.payments.PSC.active){%>
+		    									<%=service.payments.PSC.cost%> zł
+		    								<%}else{%>
+		    									<b>x</b>
+		    								<%}%>
+					    				</td>
+					    			</tr>
+					    			<tr>
+					    				<td><b>SMS</b></td>
+					    				<td class="float-right">
+					    					<%if(service.payments.SMS.active){%>
+		    									<%=service.payments.SMS.cost%> zł
+		    								<%}else{%>
+		    									<b>x</b>
+		    								<%}%>
+					    				</td>
+					    			</tr>
+					    		</table>
+					    	</p>
+					    	<a href="#" class="btn btn-outline-success w-100" data-toggle="modal" data-target="#buyNow">Uzyskaj <i class="fas fa-shopping-cart"></i></a>
+	 						<!-- <a href="#" class="btn btn-outline-info w-100">Podaruj <i class="fas fa-gift"></i></a> -->
+					  	</div>
+				  	</center>
+				</div>
+			</div>
+			<div class="col-lg-7 col-md-6">
+				<div class="p-3">
+					<%-service.description.replace(/\n/gi,'<br>')%>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="buyNow" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-lg" role="document">
+	    	<div class="modal-content"style="background:#2d2d2d">
+	      		<div class="modal-header">
+
+	        		<h5 class="modal-title"  id="exampleModalScrollableTitle">
+	        			<%=service.title%>
+	        		</h5>
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          			<span class="text-light" aria-hidden="true">&times;</span>
+	        		</button>
+	      		</div>
+	      		<div class="modal-body">
+	      			Wybierz sposób płatności:<br>
+	      			<!-- <button class="btn btn-outline-success p-4 xd1" onclick="prz('xd1')">
+	      				<i class="fab fa-paypal"></i>
+	      				Paypal
+	      			</button> -->
+	      			<%if(service.payments.PSC.active=="true"){%>
+	      			<button class="btn btn-outline-success p-4 xd2" onclick="prz('xd2')">
+			      		<i class="fas fa-lock"></i>
+			      		PAYSAFECARD<br>
+			      		<%=service.payments.PSC.cost%> zł
+			      	</button>
+			      	<%}%>
+
+			      	<%if(service.payments.przelew.active=="true"){%>
+			      	<button class="btn btn-outline-success p-4 xd3" onclick="prz('xd3')">
+			      		<i class="fas fa-credit-card"></i>
+			      		Przelew<br>
+			      		<%=service.payments.przelew.cost%> zł
+			      	</button>
+			      	<%}%>
+
+			      	<%if(service.payments.SMS.active=="true"){%>
+			      	<button class="btn btn-outline-success p-4 xd4" onclick="prz('xd4')">
+			      		<i class="fas fa-sms"></i>
+			      		SMS<br>
+			      		<%=service.payments.SMS.cost%> zł
+			      	</button>
+			      	<%}%>
+	      			<br>
+			      	<div class="md-form">
+					  	<input type="text" id="nick" class="text-light form-control">
+					  	<label for="nick">Podaj swój nick z serwera</label>
+							<div class="alert btn-outline-danger charsx" style="display:none;">
+								Nick musi zawierać co najmniej 3 znaki.
+							</div>
+					</div>
+	      		</div>
+	      		<div class="modal-footer">
+	        		<button type="button" class="btn" data-dismiss="modal">Anuluj</button>
+	        		<button type="button" class="btn" onclick="payment(nick.value)" style="background:<%=database.theme%>;color:white;">Przejdź do płatności</button>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+	<script>
+	var wybor=0;
+	function prz(n){
+		$(".xd1").addClass("btn-outline-success")
+		$(".xd2").addClass("btn-outline-success")
+		$(".xd3").addClass("btn-outline-success")
+		$(".xd4").addClass("btn-outline-success")
+
+		$(".xd1").removeClass("btn-success")
+		$(".xd2").removeClass("btn-success")
+		$(".xd3").removeClass("btn-success")
+		$(".xd4").removeClass("btn-success")
+
+		$("."+n).addClass("btn-success")
+		$("."+n).removeClass("btn-outline-success")
+		wybor=n;
+	}
+	function payment(nick){
+		if(nick.length>2){
+			if(wybor==0){
+				alert("Wybierz sposób płatności")
+			}else if(wybor=='xd1'){
+				document.location=`?temp=payment&type=paypal&nick=${nick}&service=<%=query.service%>`
+			}else if(wybor=='xd2'){
+				document.location=`?temp=payment&type=PSC&nick=${nick}&service=<%=query.service%>`
+			}else if(wybor=='xd3'){
+				document.location=`?temp=payment&type=przelew&nick=${nick}&service=<%=query.service%>`
+			}else if(wybor=='xd4'){
+				document.location=`?temp=payment&type=SMS&nick=${nick}&service=<%=query.service%>`
+			}
+		}else{
+			$(".charsx").css("display","block")
+		}
+	}
+
+	</script>
+
+<%
+}else{
+%>
+<script>document.location.href="?temp=404"</script>
+<%
+}
+%>

@@ -1,2 +1,2 @@
-# mcshop
-Sklep serwera minecraftowego.
+# minecraft-shop
+Minecraft shop in node.js

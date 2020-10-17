@@ -1,0 +1,190 @@
+<%
+service=database.services[query.service]
+%>
+    <button class="btn btn-outline-success" onclick="save()">Zapisz</button>
+    <input class="btn btn-outline-warning" type="button" onclick="document.location='?temp=services'" value="Anuluj">
+    <input class="btn btn-outline-danger" type="button" onclick="del()" value="Usuń">
+    <div class="card text-light mt-3" style="background:#292929">
+        <div class="card-header">
+            Ogólne ustawienia
+        </div>
+        <div class="card-body pb-4">
+            <div class="md-form">
+                <input name="f_name"type="text" id="f_name" class="form-control text-light" value="<%=service.title%>">
+                <label for="f_name">Nazwa usługi</label>
+            </div>
+            <div class="md-form">
+                <input name="f_uuid" type="text" id="f_uuid" class="form-control text-light" value="<%=query.service%>">
+                <label for="f_uuid">UUID</label>
+            </div>
+            <div class="md-form">
+                <input name="f_server" type="text" id="f_server" class="form-control text-light" value="<%=service.server%>">
+                <label for="f_server">Nazwa serwera</label>
+            </div>
+            <div class="md-form">
+                <textarea rows="25" name="f_description" id="f_description" class="md-textarea form-control text-light" rows="3"><%=service.description%></textarea>
+                <label for="f_description">Opis</label>
+            </div>
+            <div class="md-form">
+                <textarea name="f_commands" id="f_commands" class="md-textarea form-control text-light" rows="3"><%=service.commands%></textarea>
+                <label for="f_commands">Komendy do wykonania przez serwer</label>
+            </div>
+            <div class="md-form">
+                <input name="f_icon" type="text" id="f_icon" class="form-control text-light" value="<%=service.icon%>">
+                <label for="f_icon">Ikona</label>
+            </div>
+            <div class="custom-control custom-switch">
+                <input name="f_sms"type="checkbox" class="custom-control-input text-light" id="customSwitches"
+                    <%if(service.payments.SMS.active=="true"){%>
+                        checked="<%=service.payments.SMS.active%>"
+                    <%}%> data-toggle="collapse" data-target=".colSMS">
+                <label class="custom-control-label text-light" for="customSwitches">SMS</label>
+            </div>
+            <div class="custom-control custom-switch">
+                <input name="f_przelew" type="checkbox" class="custom-control-input text-light" id="customSwitches2"    <%if(service.payments.przelew.active=="true"){%>
+                        checked="<%=service.payments.przelew.active%>"
+                    <%}%> data-toggle="collapse" data-target=".colPRZELEW" data-toggle="collapse" data-target=".colPRZELEW">
+                <label class="custom-control-label text-light" for="customSwitches2">PRZELEW</label>
+            </div>
+            <div class="custom-control custom-switch">
+                <input name="f_PSC" type="checkbox" class="custom-control-input text-light" id="customSwitches3" <%if(service.payments.PSC.active=="true"){%>
+                        checked="<%=service.payments.PSC.active%>"
+                    <%}%> data-toggle="collapse" data-target=".colPAYSAFECARD">
+                <label class="custom-control-label text-light" for="customSwitches3">PAYSAFECARD</label>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-light mt-3" style="background:#292929">
+                <div class="card-header">
+                    SMS
+                </div>
+                <div class="card-body">
+                    <div class="colSMS collapse <%
+                        if(service.payments.SMS.active=="true"){%>show<%}%>">
+                        <div class="md-form">
+                            <input name="f_sms_userid" type="text" id="f_sms_userid" class="form-control text-light" value="<%=service.payments.SMS.userid%>">
+                            <label for="form1">UserID</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_sms_serviceid"type="text" id="f_sms_serviceid" class="form-control text-light" value="<%=service.payments.SMS.serviceid%>">
+                            <label for="form1">ServiceID</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_sms_sms"type="text" id="f_sms_sms" class="form-control text-light" value="<%=service.payments.SMS.sms%>">
+                            <label for="form1">Treść SMS</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_sms_number"type="text" id="f_sms_number" class="form-control text-light" value="<%=service.payments.SMS.number%>">
+                            <label for="f_sms_number">Numer</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_sms_cost"type="text" id="f_sms_cost" class="form-control text-light" value="<%=service.payments.SMS.costnetto%>">
+                            <label for="f_sms_cost">Koszt Netto</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_sms_costb"type="text" id="f_sms_costb" class="form-control text-light" value="<%=service.payments.SMS.cost%>">
+                            <label for="f_sms_costb">Koszt Brutto</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-light mt-3" style="background:#292929">
+                <div class="card-header">
+                    Przelew
+                </div>
+                <div class="card-body">
+                    <div class="colPRZELEW collapse <%
+                        if(service.payments.przelew.active=="true"){%>show<%}%>">
+                        <div class="md-form">
+                            <input name="f_przelew_userid"type="text" id="f_przelew_userid" class="form-control text-light" value="<%=service.payments.przelew.userid%>">
+                            <label for="f_przelew_userid">UserID</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_przelew_shopid"type="text" id="f_przelew_shopid" class="form-control text-light" value="<%=service.payments.przelew.shopid%>">
+                            <label for="f_przelew_shopid">ShopID</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_przelew_hash"type="text" id="f_przelew_hash" class="form-control text-light" value="<%=service.payments.przelew.hash%>">
+                            <label for="f_przelew_hash">Hash</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_przelew_signature"type="text" id="f_przelew_signature" class="form-control text-light" value="<%=service.payments.przelew.signature%>">
+                            <label for="f_przelew_signature">Podpis (signature)</label>
+                        </div>
+                        <div class="md-form">
+                            <input name="f_przelew_cost"type="text" id="f_przelew_cost" class="form-control text-light" value="<%=service.payments.przelew.cost%>">
+                            <label for="f_przelew_cost">Koszt Brutto</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-light mt-3" style="background:#292929">
+                <div class="card-header">
+                    PAYSAFECARD
+                </div>
+                <div class="card-body">
+                    <div class="colPAYSAFECARD collapse <%
+                        if(service.payments.PSC.active=="true"){%>show<%}%>">
+                        <div class="md-form">
+                            <input name="f_PSC_cost"type="text" id="f_PSC_cost" class="form-control text-light" value="<%=service.payments.PSC.cost%>">
+                            <label for="f_PSC_cost">Koszt Brutto</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br><br><br><br><br><br>
+<script>
+function save(){
+    console.log("ready to save")
+    $.get("/panel/api/set_service",{
+        uuid:f_uuid.value,
+        name:f_name.value,
+        server:f_server.value,
+        description:f_description.value,
+        commands:f_commands.value,
+        icon:f_icon.value,
+        SMS:{
+            active:String(customSwitches.checked),
+            userid:f_sms_userid.value,
+            serviceid:f_sms_serviceid.value,
+            sms:f_sms_sms.value,
+            number:f_sms_number.value,
+            cost:f_sms_cost.value,
+            costb:f_sms_costb.value
+        },
+        przelew:{
+            active:String(customSwitches2.checked),
+            userid:f_przelew_userid.value,
+            shopid:f_przelew_shopid.value,
+            hash:f_przelew_hash.value,
+            cost:f_przelew_cost.value,
+            signature:f_przelew_signature.value
+        },
+        PSC:{
+            active:String(customSwitches3.checked),
+            cost:f_PSC_cost.value
+        }
+    },function (r){
+        console.log(r)
+    })
+}
+function del(){
+    console.log("ready to delete")
+    $.get("/panel/api/set_service",{
+        uuid:f_uuid.value,
+        del:true
+    },function (r){
+        document.location.href="?temp=services"
+    })
+}
+</script>

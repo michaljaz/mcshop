@@ -1,0 +1,13 @@
+{
+	"server":"localhost",
+	"rcon":{
+		"port":25575,
+		"password":"aqq123"
+	},
+	"serverPath":"/home/mike/docs/server/",
+	"panel":{
+		"login":"admin",
+		"password":"password"
+	},
+	"return_urlc":"https://85873806074d.ngrok.io/shop/buy/przelew/"
+}

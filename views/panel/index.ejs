@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/src/favicon.png">
+	<title>Minecraft server panel</title>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+	<!-- Google Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+		
+	<meta name="description" content="Oficjalna strona serwera Meteor.happyminecraft.net">
+  	<meta name="keywords" content="meteor, meteorcraft, meteor minecraft, meteor happyminecraft, meteor server,minecraft">
+	<!-- JQuery -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+	<style>
+body{
+	background:#303030;
+}
+.btn {
+    text-transform: none;
+}
+
+	</style>
+</head>
+<body>
+	<div class="container mt-4">
+		<a type="button" class="btn btn-dark" href="?temp=main">Panel Sklepu</a>
+		<a class="btn btn-dark" href="?temp=servers">Serwery</a>
+		<a class="btn btn-dark" href="?temp=services">Usługi</a>
+		<a class="btn btn-dark" href="?temp=vouchers">Vouchery</a>
+<!-- 		<a href="?action=logout" class="btn btn-outline-danger">Wyloguj</a> -->
+		
+		
+		<br><br>
+		<% 
+        access=["main","services","vouchers","service","servers","server"];
+        if(query.temp==undefined){ %>
+            <script>document.location.href="?temp=main"</script>
+        <% }else if (access.includes(query.temp)){ %>
+            <%- include(`dep/${query.temp}`, {database,query} ); %>
+        <% }else{ %> 
+            <script>document.location.href="?temp=main"</script>
+        <% } %> 
+	</div>
+</body>
+</html>

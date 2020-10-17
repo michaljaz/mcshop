@@ -1,0 +1,47 @@
+<div class="card-header">
+	<span onclick="document.location='?temp=main'">Sklep</span> <span class="text-muted">/ Zrealizuj voucher</span>
+</div>
+<div class="card-body" style="background:#2d2d2d;">
+	<p class="card-text mt-0">
+		<div class="alert btn-outline-info text-center">
+			Vouchery można zdobywać w eventach lub przez aktywność na serwerze.<br>
+		</div>
+		<form onsubmit="return sub(event)">
+		    <div class="md-form">
+			  <input type="text" id="form1" class="form-control av_nick">
+			  <label for="form1">Podaj swój nick z serwera</label>
+			</div>
+			<div class="md-form">
+			  <input type="text" id="form2" class="form-control av_code">
+			  <label for="form2">Kod vouchera</label>
+			</div>
+			<button class="alert btn-danger voucher-NO" style="display:none;">
+				Voucher jest nieprawidłowy lub został już wykorzystany :(
+			</button>
+			<button class="alert btn-success voucher-OK" style="display:none;"></button>
+			<button type="submit" class="btn" style="background:<%=database.theme%>;color:white;">Sprawdź</button>
+		</form>
+	</p>
+</div>
+<script>
+function check_voucher(nick,code){
+	$.post("/shop/voucher",{
+		nick:nick,
+		code:code
+	},function (r){
+		if(r!="NO" && r!="ERROR"){
+			$(".voucher-OK").html(`Użyto pomyślnie vouchera <b>${r}</b> dla gracza <b>${nick}</b>`)
+			$(".voucher-OK").css("display","block");
+			$(".voucher-NO").css("display","none");
+		}else{
+			$(".voucher-NO").css("display","block");
+			$(".voucher-OK").css("display","none");
+		}
+	})
+}
+function sub(e){
+	e.preventDefault()
+	check_voucher($('.av_nick').val(), $('.av_code').val())
+	return false;
+}
+</script>

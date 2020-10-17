@@ -1,0 +1,41 @@
+.card-header{
+padding:20px;
+font-size:18px;
+}
+.cardx:hover{
+cursor:pointer;
+}
+span:hover{
+cursor:pointer;
+}
+.nav-link{
+cursor:pointer;
+}
+/* width */
+::-webkit-scrollbar {
+width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+background: #272727; 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: <?php echo $theme; ?>; 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555; 
+}
+.offline, .notloading,.offline-2, .notloading-2{
+display:none;
+}
+body{
+background:#181a1b;
+/*	background-image: url('https://i.pinimg.com/originals/28/72/32/2872320f93b3596c22d683dabd079b94.jpg');
+background-size:cover;*/
+height:100%;
+}
+img{
+cursor:pointer;
+}

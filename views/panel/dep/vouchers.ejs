@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-7">
+        <div class="card text-light" style="background:#292929">
+            <div class="card-header">
+                Vouchery
+            </div>
+            <div class="card-body">
+                <table class="table  text-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">Kod</th>
+                            <th scope="col">Nazwa</th>
+                            <th scope="col">Komendy</th>
+                            <th scope="col">
+                            	X
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%Object.keys(database.vouchers).forEach(function (code){%>
+                            <tr>
+                                <th scope="row"><%=code%></th>
+                                <td><%=database.vouchers[code].title%></td>
+                                <td><%=database.vouchers[code].commands%></td>
+                                <td style="cursor:pointer" onclick="del_voucher('<%=code%>')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                        <%})%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card text-light" style="background:#292929">
+            <div class="card-header">
+                Dodaj voucher
+            </div>
+            <div class="card-body">
+                <div class="md-form">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form1">Nazwa vouchera</label>
+                </div>
+                <div class="md-form">
+                    <input type="text" id="form3" class="form-control">
+                    <label for="form3">ID Serwera</label>
+                </div>
+                <div class="md-form">
+                    <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
+                    <label for="form7">Komendy wysyłane do serwera</label>
+                </div>
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input" id="customSwitches" data-toggle="collapse" data-target=".kod">
+                    <label class="custom-control-label" for="customSwitches">Własny kod (opcjonalnie)</label>
+                </div>
+                <div class="md-form kod collapse">
+                    <input type="text" id="form2" class="form-control">
+                    <label for="form2">Kod vouchera</label>
+                </div>
+                <button class="btn btn-outline-success" onclick="add_voucher()">
+                Dodaj voucher
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function add_voucher(){
+    $.get("/panel/api/add_voucher",{
+        code:form2.value,
+        title:form1.value,
+        commands:form7.value,
+        server:form3.value
+    },function (r){
+        // console.log(r)
+        document.location.reload()
+    })
+}
+function del_voucher(code){
+    $.get("/panel/api/del_voucher",{
+        code
+    },function (){
+        document.location.reload()
+    })
+}
+
+    </script>

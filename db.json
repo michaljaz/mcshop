@@ -1,0 +1,68 @@
+{
+    "payments": {
+        "uuid": {
+            "nick": "MJQ",
+            "title": "PAKIET VIP",
+            "data": "2000-07-01T00:00:00+02:00"
+        }
+    },
+    "servers": {
+        "surv": {
+            "name": "Klasyczny Survival 1.16.1",
+            "ip": "localhost",
+            "rcon": {
+                "port": "25575",
+                "password": "password"
+            }
+        },
+        "surv12": {
+            "name": "Klasyczny Survival 1.12.2",
+            "ip": "localhost",
+            "rcon": {
+                "port": "25575",
+                "password": "password"
+            }
+        }
+    },
+    "services": {
+        "vip": {
+            "title": "VIP",
+            "description": "OPIS",
+            "commands": "say [nick] kupił VIP",
+            "icon": "/src/vip.png",
+            "server": "surv",
+            "payments": {
+                "SMS": {
+                    "active": "true",
+                    "userid": "7120",
+                    "serviceid": "6675",
+                    "sms": "MS.MCSHOP",
+                    "number": "79480",
+                    "costnetto": "9",
+                    "cost": "11.07"
+                },
+                "przelew": {
+                    "active": "true",
+                    "userid": "7120",
+                    "shopid": "578",
+                    "hash": "Po7Yj7Nk3Mj7Ud8Ml2Az3Dl6Sp3Mb4Us",
+                    "cost": "8",
+                    "signature": "ff6c3d87794fae5b6aec016c1257569f"
+                },
+                "PSC": {
+                    "active": "true",
+                    "cost": "8"
+                }
+            }
+        }
+    },
+    "vouchers": {
+        "1234": {
+            "title": "TESTOWY VOUCHER",
+            "commands": "say VOUCHER",
+            "server": "surv"
+        }
+    },
+    "theme": "#29381a",
+    "month": "30%"
+}

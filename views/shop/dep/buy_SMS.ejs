@@ -1,0 +1,73 @@
+<%
+if(database.services[query.service]!=undefined){
+	sms=database.services[query.service].payments.SMS
+%>
+
+<div class="card-header">
+	<span onclick="document.location='?temp=main'">Sklep</span> <span class="text-muted">/ Płatność SMS</span>
+</div>
+<center>
+<div class="card-body text-center" style="background:#2d2d2d; width:90%;">
+	<p class="card-text mt-0">
+
+		
+		<br>
+		<div class="sms-r">
+			Ta usługa kosztuje <b><%=sms.costnetto%>zł netto (<%=sms.cost%>zł z vat)</b>.
+			<br>
+			Aby zakupić tą usługę wyślij SMS o treści <b><%=sms.sms%></b> pod numer <b><%=sms.number%></b>.
+			<br>W odpowiedzi otrzymasz SMS z kodem, który wpisz poniżej.
+		</div>
+		<hr>
+		<div class="sms-pos">
+			<input type="hidden" name="send" value="" /> 
+		    <div class="md-form">
+			  	<input name="code" type="text" id="form2" class="form-control av_code">
+			  	<label for="form2">Wpisz kod SMS</label>
+			</div>
+			<div class="alert btn-outline-success code_ok" >Wpisałeś poprawny kod!</div>
+			<div class="alert btn-outline-danger code_e" >Wpisałeś niepoprawny kod</div>
+			<button onclick="checkCode()" class="btn" style="background:<%=database.theme%>;color:white;">Dalej</button>
+			<center>
+				<br/><br/>
+	            Płatności zapewnia firma <a href="http://microsms.pl/">MicroSMS</a>. <br/>
+	            Korzystanie z serwisu jest jednozanczne z akceptacją <a href="http://microsms.pl/partner/documents/">regulaminów</a>.<br/>
+	            Jeśli nie dostałeś kodu zwrotnego w ciągu 30 minut skorzystaj z <a href="http://microsms.pl/customer/complaint/">formularza reklamacyjnego</a><br/><br/>
+	        </center>
+	    </div>
+	</p>
+</div>
+</center>
+<script>
+$(".code_ok").slideUp(0)
+$(".code_e").slideUp(0)
+function tog(idx){
+	$(".sms-l").css("display","none")
+	$(".sms-r").css("display","none")
+	$(".sms-q").css("display","none")
+
+	$(idx).css("display","block")
+	$(".sms-pos").css("display","block")
+}
+function checkCode(){
+	$.get("/shop/buy/SMS",{
+		code:form2.value,
+		service:"<%=query.service%>",
+		nick:"<%=query.nick%>"
+	},function (resp){
+		// console.log(resp)
+		if(resp=="OK"){
+			$(".code_ok").slideDown(300)
+			$(".code_e").slideUp(300)
+		}else{
+			$(".code_ok").slideUp(300)
+			$(".code_e").slideDown(300)
+		}
+	})
+	console.log(form2.value,"<%=query.service%>","<%=query.nick%>")
+}
+
+</script>
+<%}else{%>
+<script>document.location.href="?temp=404"</script>
+<%}%>

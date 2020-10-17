@@ -1,0 +1,15 @@
+
+<div class="card-header">
+	<span>Sklep</span> <span class="text-muted"> / Serwery</span>
+</div>
+<div class="card-body" style="background:#2d2d2d;">
+	<div class="row">
+		<% Object.keys(database.servers).forEach(function (server){ %>
+			<div class="col-md-6">
+				<div class="alert btn-dark pb-5 pt-5 text-center waves waves-light" style="cursor:pointer;" onclick="document.location='?temp=services&server=<%= server %>'">
+					<%= database.servers[server].name %>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+</div>

@@ -1,0 +1,59 @@
+<%
+denied=["przelew","SMS","PSC"]
+service=database.services[query.service]
+server=database.servers[service.server]
+if(denied.includes(query.type) && database.services[query.service]!=undefined){
+	redirect=`?temp=buy_${query.type}&service=${query.service}&nick=${query.nick}`;
+%>
+	<div class="card-header">
+		<span onclick="document.location='?temp=main'">Sklep</span> <span class="text-muted">/ Potwierdzenie zakupu</span>
+	</div>
+	<div class="card-body" style="background:#2d2d2d;">
+		<p class="card-text mt-0">
+			<center>
+			    <h1>Kupujesz <%=service.title%></h1>
+			</center>
+		    <div class="row text-light">
+		    	<div class="col-6 text-right" style="font-weight:bolder;">
+		    		<div class="p-2">
+		    			Nazwa usługi
+		    		</div>
+		    		<div class="p-2">
+		    			Serwer
+		    		</div>
+		    		<div class="p-2">
+		    			Kwota
+		    		</div>
+		    		<div class="p-2">
+		    			Nick kupującego
+		    		</div>
+		    		<div class="p-2">
+		    			Metoda transakcji
+		    		</div>
+		    	</div>
+		    	<div class="col-6">
+		    		<div class="p-2">
+		    			<%=service.title%>
+		    		</div>
+		    		<div class="p-2">
+		    			<%=server.name%>
+		    		</div>
+		    		<div class="p-2">
+		    			<%=service.payments[query.type].cost%> zł
+		    		</div>
+		    		<div class="p-2">
+		    			<%=query.nick%>
+		    		</div>
+		    		<div class="p-2">
+		    			<%=query.type%>
+		    		</div>
+		    	</div>
+		    </div>
+		    <center>
+		    	<button class="btn" onclick="document.location.href='<%-redirect%>'"style="background:<%=database.theme%>;color:white;">Potwierdź zakup</button>
+		    </center>
+		</p>
+	</div>
+<%}else{%>
+<script>document.location.href="?temp=404"</script>
+<%}%>

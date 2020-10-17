@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sklep meteor.happyminecraft.net</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Meteor.happyminecraft.net">
+        <meta name="keywords" content="meteor, meteorcraft, meteor minecraft, meteor happyminecraft, meteor server,minecraft">
+        
+        <link rel="icon" href="/src/favicon.png">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <br>
+            <br>
+            <br>
+            <h1 style="color:white;" class="ml-1 row justify-content-lg-start justify-content-center" onclick="document.location='../'">
+                <img class="faviacon" src="/src/favicon.png" width=48 height=48>
+                <span class="ml-1">
+                    MC.GROK.EU
+                </span>
+            </h1>
+            <br>
+            <ul class="nav p-2 rounded" style="background:<%= database.theme %>">
+                <li class="nav-item waves-effect waves-light">
+                    <a class="nav-link text-light p-2 pl-3 pr-3 active rounded" <% if(query.temp!="voucher"){ %> style="background:<%= database.theme %>;filter: brightness(85%);"<% } %> href="?temp=main">Sklep</a>
+                </li>
+                <li class="nav-item waves-effect waves-light">
+                    <a class="nav-link text-light p-2 pl-3 pr-3 rounded" <% if(query.temp=="voucher"){ %> style="background:<%= database.theme %>;filter: brightness(85%);"<% } %> href="?temp=voucher">Zrealizuj voucher</a>
+                </li>
+            </ul>
+            <div class="row mt-3">
+                <div class="col-md-8 col-lg-7 mb-3 col-xl-8">
+                    <div class="card text-light" style="background:#2d2d2d;">
+                        <% 
+                        access=["main","404","service","payment","buy_SMS","buy_przelew","voucher","thankyou","buy_PSC","services"];
+                        if(query.temp==undefined){ %>
+                            <script>document.location.href="?temp=main"</script>
+                        <% }else if (access.includes(query.temp)){ %>
+                            <%- include(`dep/${query.temp}`, {database,query} ); %>
+                        <% }else{ %> 
+                            <script>document.location.href="?temp=404"</script>
+                        <% } %> 
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12 col-lg-5 col-xl-4">
+                    <div class="card text-light" style="background:#2d2d2d;">
+                        <div class="card-header">
+                            <center>
+                                Utrzymanie serwera
+                            </center>
+                        </div>
+                        <div class="card-body">
+                            <div class="progress bg-dark" style="height:30px;">
+                                <div class="progress-bar" role="progressbar" style="width:<%=database.month%>;height:30px;background:<%= database.theme %>;"><%=database.month%></div>
+                            </div>
+                            <div class="text-center mt-3">
+                                "Cel miesięczny"
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card text-light mb-3" style="background:#2d2d2d;">
+                        <div class="card-header">
+                            <center>
+                                Ostatnie zakupy
+                            </center>
+                        </div>
+                        <div class="card-body p-1">
+                            <p class="card-text">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- <div class="card text-light" style="background:#252525;">
+                <div class="card-body">
+                    <p class="card-text text-center">
+                        Proudly powered by
+                    </p>
+                </div>
+            </div> -->
+        </div>
+        </div>
+        <br><br>
+        <script>
+            function interpol(nametag, value) {
+              $(`[nametag=${nametag}]`).html(value);
+            }
+            	
+        </script>
+    </body>
+</html>
