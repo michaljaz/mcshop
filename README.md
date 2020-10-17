@@ -1,0 +1,2 @@
+# mcshop
+Sklep serwera minecraftowego.
