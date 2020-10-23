@@ -29,7 +29,7 @@
             "title": "VIP",
             "description": "OPIS",
             "commands": "say [nick] kupił VIP",
-            "icon": "/src/vip.png",
+            "icon": "/img/vip.png",
             "server": "surv",
             "payments": {
                 "SMS": {
