@@ -24,42 +24,43 @@ async function runCommand(frase){
 	}catch(e){}
 }
 function saveDb(){
-	fs.writeFileSync('./db.json', JSON.stringify(database,null,4));
+	fs.writeFileSync(`${__dirname}/db.json`, JSON.stringify(database,null,4));
 }
 
 
 //Load files
 	var config={}
 	var rcon;
-	fs.readFile('./config/config.json', 'utf8', (err, data) => {
-	    config=JSON.parse(data)  
+	fs.readFile(`${__dirname}/config/config.json`, 'utf8', (err, data) => {
+	    config=JSON.parse(data)
 	})
 
 	var rules={}
-	fs.readFile('./config/rules_discord.txt', 'utf8', (err, data) => {
+	fs.readFile(`${__dirname}/config/rules_discord.txt`, 'utf8', (err, data) => {
 	    rules.discord=data.replace(/\n/gi,'<br>')
 	})
-	fs.readFile('./config/rules_main.txt', 'utf8', (err, data) => {
+	fs.readFile(`${__dirname}/config/rules_main.txt`, 'utf8', (err, data) => {
 	    rules.main=data.replace(/\n/gi,"<br>")
 	})
-	fs.readFile('./config/rules_server.txt', 'utf8', (err, data) => {
+	fs.readFile(`${__dirname}/config/rules_server.txt`, 'utf8', (err, data) => {
 	    rules.server=data.replace(/\n/gi,"<br>")
 	})
-	fs.readFile('./config/rules_shop.txt', 'utf8', (err, data) => {
+	fs.readFile(`${__dirname}/config/rules_shop.txt`, 'utf8', (err, data) => {
 	    rules.shop=data.replace(/\n/gi,"<br>")
 	})
 
 	var database={}
-	fs.readFile('./db.json', 'utf8', (err, data) => {
+	fs.readFile(`${__dirname}/db.json`, 'utf8', (err, data) => {
 	    database=JSON.parse(data)
 	})
 
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+app.set('views', __dirname+'/views')
 app.use(express.static(__dirname + '/public'));
 
-// index page 
+// index page
 app.all('/', function(req, res) {
     res.render('index',{rules,database});
 });
@@ -72,18 +73,18 @@ app.all('/panel/', function(req, res) {
 		res.end('<html><body>Need some creds son</body></html>');
 	}else if(auth){
 		var tmp = auth.split(' ');
-        var buf = new Buffer(tmp[1], 'base64'); 
+        var buf = new Buffer(tmp[1], 'base64');
         var plain_auth = buf.toString();
         var creds = plain_auth.split(':');
         var username = creds[0];
         var password = creds[1];
-        if((username == config.panel.login) && (password == config.panel.password)) { 
+        if((username == config.panel.login) && (password == config.panel.password)) {
             res.statusCode = 200;
             res.render('panel/index', {
 		        database,
 		        query:req.query,
 		        config
-		    }); 
+		    });
         }else {
             res.statusCode = 401;
             res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"');
@@ -178,7 +179,7 @@ app.all('/panel/api/set_service',function (req,res){
 			}
 		}
 	}
-	
+
 	res.send(`OK`)
 	saveDb()
 })
@@ -218,13 +219,13 @@ app.all('/panel/api/new_service',function (req,res){
 	saveDb()
 })
 app.all('/shop/', function(req, res) {
-	
+
 	res.render('shop/index', {
         database,
         query:req.query,
         config
-    }); 
-	
+    });
+
 });
 function preg_match_all(regex, str) {
   return new RegExp(regex,'g').test(str)
@@ -268,7 +269,7 @@ app.post('/shop/voucher/',function (req,res){
 	}else{
 		res.send("NO")
 	}
-	
+
 })
 
 app.listen(8080,()=>{
