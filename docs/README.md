@@ -1,4 +1,4 @@
-# minecraft-shop
+# mshop
 Sklep serwera minecraftowego
 
 # Demo
