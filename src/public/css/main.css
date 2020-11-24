@@ -1,0 +1,100 @@
+html {
+		scroll-behavior: smooth;
+}
+						/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+.item img {
+-webkit-transition: all 0.2s ease;
+-o-transition: all 0.2s ease;
+transition: all 0.2s ease;
+margin-bottom: 7px;
+}
+.item img:hover {
+-webkit-transform:scale(1.1);
+-ms-transform:scale(1.1);
+transform:scale(1.1);
+}
+.img {
+width:200px; height:200px;
+margin:10px;
+}
+.title {
+font-weight: bold;
+font-size: 17px;
+color: white;
+}
+.subtitle {
+color: #cfcfcf;
+font-size: 12px;
+}
+.title,
+.subtitle {
+margin: 0;
+padding: 0;
+}
+body, html {
+height: 100%;
+background:#181a1b;
+/*background-repeat:repeat;
+
+background-image: url("img/dirt2.png");
+background-size: 100px 100px;*/
+}
+.navbar{
+		background:rgba(0,0,0,0);
+/*background-repeat:repeat;
+background-image: url("img/dirt3.png");
+background-size: 100px 100px;*/
+}
+.bg {
+/* The image used */
+position:block;
+background-image: url(/img/header.png);
+/* Full height */
+height: 100%;
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+iframe{
+border:0px;
+}
+a {
+text-decoration: none;
+}
+p {
+margin: 0;
+padding: 3px;
+}
+table{
+color:gray;
+}
+table i{
+color:green;
+font-size:25px;
+}
+table b{
+color:blue;
+}
+th[scope=col]{
+font-size:20px;
+text-align:center;
+}

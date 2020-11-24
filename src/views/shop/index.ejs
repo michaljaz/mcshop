@@ -2,21 +2,7 @@
 <html>
     <head>
         <title>Sklep meteor.happyminecraft.net</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Meteor.happyminecraft.net">
-        <meta name="keywords" content="meteor, meteorcraft, meteor minecraft, meteor happyminecraft, meteor server,minecraft">
-
-        <link rel="icon" href="/img/favicon.png">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
-
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+        <%- include('../temp/header'); -%>
         <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
@@ -85,13 +71,6 @@
                 </div>
             </div>
             <br>
-            <!-- <div class="card text-light" style="background:#252525;">
-                <div class="card-body">
-                    <p class="card-text text-center">
-                        Proudly powered by
-                    </p>
-                </div>
-            </div> -->
         </div>
         </div>
         <br><br>
@@ -99,7 +78,6 @@
             function interpol(nametag, value) {
               $(`[nametag=${nametag}]`).html(value);
             }
-
         </script>
     </body>
 </html>
