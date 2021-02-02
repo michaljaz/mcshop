@@ -60,33 +60,44 @@ app.use express.static("#{__dirname}/public")
 app.all '/', (req, res)->
 	res.render 'index',{rules,database}
 	return
-app.all '/panel/', (req, res)->
-	auth = req.headers["authorization"]
-	if not auth
-		res.setHeader 'WWW-Authenticate', 'Basic realm="Secure Area"'
-		res.statusCode = 401
-		res.end '<html><body>Need some creds son</body></html>'
-	else if auth
-		tmp = auth.split ' '
-		buf = new Buffer tmp[1], 'base64'
-		plain_auth = buf.toString()
-		creds = plain_auth.split ':'
-		username = creds[0]
-		password = creds[1]
-		if (username is config.panel.login) and (password is config.panel.password)
-			res.statusCode = 200
-			res.render 'panel/index', {
-				database
-				query:req.query
-				config
-			}
-		else
-			res.statusCode = 401
+auth=(path,func,fail)->
+	app.all path, (req,res)->
+		authx = req.headers["authorization"]
+		if not authx
 			res.setHeader 'WWW-Authenticate', 'Basic realm="Secure Area"'
-			res.statusCode = 403
-			res.end '<script>document.location="/"</script>'
+			res.statusCode = 401
+			res.end '<html><body>Need some creds son</body></html>'
+		else if authx
+			tmp = authx.split ' '
+			buf = new Buffer tmp[1], 'base64'
+			plain_auth = buf.toString()
+			creds = plain_auth.split ':'
+			username = creds[0]
+			password = creds[1]
+			if (username is config.panel.login) and (password is config.panel.password)
+				res.statusCode = 200
+				func req,res
+			else
+				res.setHeader 'WWW-Authenticate', 'Basic realm="Secure Area"'
+				res.statusCode = 403
+				if fail is undefined
+					res.end '<script>document.location="/"</script>'
+				else
+					fail req,res
+		return
 	return
-app.all '/panel/api/add_voucher',(req,res)->
+auth "/panel", (req,res)->
+	if req.query.temp is "logout"
+		res.removeHeader "authorization"
+		res.end res.headers["authorization"]
+	else
+		res.render 'panel/index', {
+			database
+			query:req.query
+			config
+		}
+	return
+auth '/panel/api/add_voucher',(req,res)->
 	if req.query.code is ""
 		code=Math.random().toString(36).replace('0.',"grok_" or '')
 	else
@@ -99,12 +110,12 @@ app.all '/panel/api/add_voucher',(req,res)->
 	saveDb()
 	res.send "OK"
 	return
-app.all '/panel/api/del_voucher',(req,res)->
+auth '/panel/api/del_voucher',(req,res)->
 	delete database.vouchers[req.query.code]
 	saveDb()
 	res.send "OK"
 	return
-app.all '/panel/api/set_server',(req,res)->
+auth '/panel/api/set_server',(req,res)->
 	if req.query.del
 		database.servers[req.query.uuid]={}
 		delete database.servers[req.query.uuid]
@@ -120,7 +131,7 @@ app.all '/panel/api/set_server',(req,res)->
 	saveDb()
 	res.send "OK"
 	return
-app.all '/panel/api/new_server',(req,res)->
+auth '/panel/api/new_server',(req,res)->
 	servName=Math.random().toString(36).replace '0.',"serv_" or ''
 	database.servers[servName]={
 		name:"A Minecraft server"
@@ -133,7 +144,7 @@ app.all '/panel/api/new_server',(req,res)->
 	saveDb()
 	res.send("<script>document.location='/panel/?temp=server&server=#{servName}'</script>")
 	return
-app.all '/panel/api/set_service',(req,res)->
+auth '/panel/api/set_service',(req,res)->
 	if req.query.del
 		database.services[req.query.uuid]={}
 		delete database.services[req.query.uuid]
@@ -171,7 +182,7 @@ app.all '/panel/api/set_service',(req,res)->
 	res.send "OK"
 	saveDb()
 	return
-app.all "/panel/api/new_service",(req,res)->
+auth "/panel/api/new_service",(req,res)->
 	servName=Math.random().toString(36).replace '0.',"s_" or ''
 	database.services[servName]={
 		title:""
