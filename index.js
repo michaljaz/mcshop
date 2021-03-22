@@ -4,9 +4,9 @@ const fs = require('fs')
 const https = require('https')
 const Rcon = require('rcon')
 const bodyParser = require('body-parser')
-const config = require('./config.json')
-const rules = require('./rules.js')
-const database = require('./db.json')
+const config = require('./src/config.json')
+const rules = require('./src/rules.js')
+const database = require('./src/db.json')
 const path = require('path')
 
 app.use(
@@ -36,14 +36,14 @@ const runCommand = async function (frase) {
   } catch (error) {}
 }
 const saveDb = function () {
-  fs.writeFileSync(path.join(__dirname, 'db.json'), JSON.stringify(database, null, 4))
+  fs.writeFileSync(path.join(__dirname, 'src/db.json'), JSON.stringify(database, null, 4))
 }
 
 app.set('view engine', 'ejs')
 
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'src/views'))
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'src/public')))
 
 app.all('/', function (req, res) {
   res.render('index', { rules, database })
@@ -292,5 +292,5 @@ app.post('/shop/voucher/', function (req, res) {
 })
 
 app.listen(port, function () {
-  console.log(`App listening at \x1b[34m*:${port}\x1b[0m`)
+  console.log(`Serwer działa na \x1b[34m*:${port}\x1b[0m`)
 })

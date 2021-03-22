@@ -2,13 +2,12 @@
 Sklep serwera minecraftowego
 
 ```bash
-#Kolonowanie repozytorium
+#Uruchamianie
 git clone https://github.com/michaljaz/mcshop
 cd mcshop
-
-#Instalowanie bibliotek
 npm install
-
-#Odpalanie
 npm start
+
 ```
+
+[<img src="https://i.ibb.co/316d6XL/mcshop.png" alt="screen6" width="100%">](https://i.ibb.co/316d6XL/mcshop.png)

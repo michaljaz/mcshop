@@ -1,11 +1,1 @@
-1. Regulamin określa podstawowe prawa panujące na forum oraz na serwerze mc.grok.eu
-2. Rejestrując się na serwerze akceptujesz warunki niniejszego regulaminu
-3. Zabrania się reklamowania konkurencyjnych serwerów/forów oraz innych serwerów głosowych TeamSpeak3, Discord.
-4. Nieznajomość regulaminu nie zwalnia z jego przestrzegania. 
-5. Zabronione jest działanie na szkodę serwera mc.grok.eu. 
-6. Zabrania się używania wspomagaczy, które ułatwiają rozgrywkę oraz przeszkadzają innym.
-7. Zakazuje się wyzywania/obrażania innych graczy. 
-8. Zakazuje się udostępniania konta/podawania haseł osobom trzecim. 
-9. Administracja zastrzega sobie prawo do odpowiedzi w wątku czy mailu w przeciągu 168 godzin (7 dni) od daty zgłoszenia problemu. 
-9a. Odpowiedź w wątku czy mailu może ulec zmianie w przypadku urlopu bądź choroby. 
-10. Administracja zastrzega sobie prawo do zmiany lub uaktualnienia całego regulaminu lub jego części w dowolnym momencie.
+Ogólne zasady
