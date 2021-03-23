@@ -5,7 +5,6 @@ const https = require('https')
 const Rcon = require('rcon')
 const bodyParser = require('body-parser')
 const config = require('./src/config.json')
-const rules = require('./src/rules.js')
 const database = require('./src/db.json')
 const path = require('path')
 
@@ -41,12 +40,12 @@ const saveDb = function () {
 
 app.set('view engine', 'ejs')
 
-app.set('views', path.join(__dirname, 'src/views'))
+app.set('views', path.join(__dirname, 'src/ejs'))
 
 app.use(express.static(path.join(__dirname, 'src/public')))
 
 app.all('/', function (req, res) {
-  res.render('index', { rules, database })
+  res.render('index', { database })
 })
 
 const auth = function (path, func, fail) {

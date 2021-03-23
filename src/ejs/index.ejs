@@ -392,33 +392,7 @@
                     <span id="regulamin"></span>
                 </div>
                 <hr class="border:1px solid white">
-                <h1 class="text-light mt-5">
-                    REGULAMIN!
-                </h1>
-                <div class="card text-light mb-5" style="background:#252525;">
-                    <div class="card-body p-3">
-                        <p class="card-text">
-                        <div class="text-left" style="font-size:17px;color:gray;">
-                          <h3 class="text-white" data-toggle="collapse" href="#rulesMain" aria-expanded="false" aria-controls="rulesMain" style="cursor:pointer;">§1. Ogólne zasady</h3>
-                          <div class="collapse" id="rulesMain">
-                            <%-rules.main%>
-                          </div>
-                          <h3 class="text-white mt-3" data-toggle="collapse" href="#rulesDiscord" aria-expanded="false" aria-controls="rulesDiscord" style="cursor:pointer;">§2. Zasady panujące na serwerze "discord"</h3>
-                          <div class="collapse" id="rulesDiscord">
-                            <%-rules.discord%>
-                          </div>
-                          <h3 class="text-white mt-3" data-toggle="collapse" href="#rulesShop" aria-expanded="false" aria-controls="rulesShop" style="cursor:pointer;">§3. Ogólne zasady usług płatnych</h3>
-                          <div class="collapse" id="rulesShop">
-                            <%-rules.shop%>
-                          </div>
-                          <h3 class="text-white mt-3" data-toggle="collapse" href="#rulesServer" aria-expanded="false" aria-controls="rulesServer" style="cursor:pointer;">§4. Zasady panujące na serwerze</h3>
-                          <div class="collapse" id="rulesServer">
-                            <%-rules.server%>
-                          </div>
-                        </div>
-                        </p>
-                    </div>
-                </div>
+                <%- include('rules'); -%>
             </center>
         </div>
         <footer class="page-footer font-small" style="background:<%=database.theme%>">
