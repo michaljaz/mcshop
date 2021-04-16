@@ -4,8 +4,8 @@ const fs = require('fs')
 const https = require('https')
 const Rcon = require('rcon')
 const bodyParser = require('body-parser')
-const config = require('./src/config.json')
-const database = require('./src/db.json')
+const config = require('./config.json')
+const database = require('./db.json')
 const path = require('path')
 
 app.use(
@@ -35,14 +35,14 @@ const runCommand = async function (frase) {
   } catch (error) {}
 }
 const saveDb = function () {
-  fs.writeFileSync(path.join(__dirname, 'src/db.json'), JSON.stringify(database, null, 4))
+  fs.writeFileSync(path.join(__dirname, 'db.json'), JSON.stringify(database, null, 4))
 }
 
 app.set('view engine', 'ejs')
 
-app.set('views', path.join(__dirname, 'src/ejs'))
+app.set('views', path.join(__dirname, 'views'))
 
-app.use(express.static(path.join(__dirname, 'src/public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.all('/', function (req, res) {
   res.render('index', { database })
