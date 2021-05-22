@@ -1,55 +1,33 @@
 const express = require('express')
+const session = require('express-session')
 const app = express()
 const fs = require('fs')
 const https = require('https')
-const Rcon = require('rcon')
 const bodyParser = require('body-parser')
 const config = require('./config.json')
 const database = require('./db.json')
 const path = require('path')
-
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-)
+const runCommand = require('./lib/runCommand.js')
 
 const port = 8080
 
-const runCommand = async function (frase) {
-  let conn, sleep
-  try {
-    conn = new Rcon(config.server, config.rcon.port, config.rcon.password)
-    sleep = function (ms) {
-      return new Promise(function (resolve) {
-        setTimeout(resolve, ms)
-      })
-    }
-    conn.connect()
-    console.log('Waiting 1 sec...')
-    await sleep(500)
-    conn.send(frase)
-    console.log('Waiting 1 sec...')
-    await sleep(1000)
-    conn.disconnect()
-  } catch (error) {}
-}
-const saveDb = function () {
+const saveDb = () => {
   fs.writeFileSync(path.join(__dirname, 'db.json'), JSON.stringify(database, null, 4))
 }
 
 app.set('view engine', 'ejs')
-
 app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(session({ secret: '12d9i239di23dnjUH1K' }))
 
-app.all('/', function (req, res) {
+app.all('/', (req, res) => {
   res.render('index', { database })
 })
 
-const auth = function (path, func, fail) {
-  app.all(path, function (req, res) {
+const auth = (path, func, fail) => {
+  app.all(path, (req, res) => {
     const authx = req.headers.authorization
     if (!authx) {
       res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"')
@@ -78,10 +56,10 @@ const auth = function (path, func, fail) {
   })
 }
 
-auth('/panel', function (req, res) {
+auth('/panel', (req, res) => {
   if (req.query.temp === 'logout') {
     res.removeHeader('authorization')
-    res.end(res.headers.authorization)
+    res.end('LUL')
   } else {
     res.render('panel/index', {
       database,
@@ -91,7 +69,7 @@ auth('/panel', function (req, res) {
   }
 })
 
-auth('/panel/api/add_voucher', function (req, res) {
+auth('/panel/api/add_voucher', (req, res) => {
   let code
   if (req.query.code === '') {
     code = Math.random()
@@ -109,13 +87,13 @@ auth('/panel/api/add_voucher', function (req, res) {
   res.send('OK')
 })
 
-auth('/panel/api/del_voucher', function (req, res) {
+auth('/panel/api/del_voucher', (req, res) => {
   delete database.vouchers[req.query.code]
   saveDb()
   res.send('OK')
 })
 
-auth('/panel/api/set_server', function (req, res) {
+auth('/panel/api/set_server', (req, res) => {
   if (req.query.del) {
     database.servers[req.query.uuid] = {}
     delete database.servers[req.query.uuid]
@@ -133,7 +111,7 @@ auth('/panel/api/set_server', function (req, res) {
   res.send('OK')
 })
 
-auth('/panel/api/new_server', function (req, res) {
+auth('/panel/api/new_server', (req, res) => {
   const servName = Math.random()
     .toString(36)
     .replace('0.', 'serv_' || '')
@@ -151,7 +129,7 @@ auth('/panel/api/new_server', function (req, res) {
   )
 })
 
-auth('/panel/api/set_service', function (req, res) {
+auth('/panel/api/set_service', (req, res) => {
   if (req.query.del) {
     database.services[req.query.uuid] = {}
     delete database.services[req.query.uuid]
@@ -191,7 +169,7 @@ auth('/panel/api/set_service', function (req, res) {
   saveDb()
 })
 
-auth('/panel/api/new_service', function (req, res) {
+auth('/panel/api/new_service', (req, res) => {
   const servName = Math.random()
     .toString(36)
     .replace('0.', 's_' || '')
@@ -231,7 +209,7 @@ auth('/panel/api/new_service', function (req, res) {
   saveDb()
 })
 
-app.all('/shop/', function (req, res) {
+app.all('/shop/', (req, res) => {
   res.render('shop/index', {
     database,
     query: req.query,
@@ -239,13 +217,12 @@ app.all('/shop/', function (req, res) {
   })
 })
 
-const pregMatchAll = function (regex, str) {
-  return new RegExp(regex, 'g').test(str)
-}
-
-app.all('/shop/buy/SMS/', function (req, res) {
+app.all('/shop/buy/SMS/', (req, res) => {
   console.log('Recieved SMS request', req.query)
   const sms = database.services[req.query.service].payments.SMS
+  const pregMatchAll = (regex, str) => {
+    return new RegExp(regex, 'g').test(str)
+  }
   if (!pregMatchAll(/^[A-Za-z0-9]{8}$/, req.query.code)) {
     res.send('ERR_F')
   } else {
@@ -254,7 +231,7 @@ app.all('/shop/buy/SMS/', function (req, res) {
       function (resp) {
         let data
         data = ''
-        resp.on('data', function (chunk) {
+        resp.on('data', (chunk) => {
           data += chunk
         })
         resp.on('end', function () {
@@ -275,14 +252,14 @@ app.all('/shop/buy/SMS/', function (req, res) {
   }
 })
 
-app.post('/shop/buy/przelew/', function (req, res) {
+app.post('/shop/buy/przelew/', (req, res) => {
   console.log('RECIEVED PRZELEW DATA!')
   res.send('OK')
 })
 
 // app.all("/shop/buy/PSC/", function (req, res) {});
 
-app.post('/shop/voucher/', function (req, res) {
+app.post('/shop/voucher/', (req, res) => {
   if (database.vouchers[String(req.body.code)] !== undefined) {
     res.send(database.vouchers[String(req.body.code)].title)
   } else {
@@ -290,6 +267,6 @@ app.post('/shop/voucher/', function (req, res) {
   }
 })
 
-app.listen(port, function () {
+app.listen(port, () => {
   console.log(`Serwer działa na \x1b[34m*:${port}\x1b[0m`)
 })
